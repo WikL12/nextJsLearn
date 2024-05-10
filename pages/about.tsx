@@ -60,6 +60,16 @@ type childenType = {
     text: string,
     ref:any,
 }
+type FatherType = childenType & {
+    name:string|number|boolean
+}
+
+interface Cat {
+    name:string
+}
+interface Anmail extends Cat {
+    age:number
+}
 // 来玩一个组件传DOM的方法，有意思
 const Son = forwardRef(memo(({children,text,ref}:childenType)=>{
     useImperativeHandle(ref,()=>{
