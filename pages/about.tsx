@@ -1,7 +1,7 @@
-import { useDeferredValue, useEffect, useMemo, useReducer, useState, useTransition, useRef, useCallback ,createContext,useContext,memo, forwardRef, useImperativeHandle} from "react"
+import React, { useDeferredValue, useEffect, useMemo, useReducer, useState, useTransition, useRef, useCallback ,createContext,useContext,memo, forwardRef, useImperativeHandle} from "react"
 type countType = string | number | null
-const reducerAction = (state: string, action: object): string => {
-    switch (action.type) {
+const reducerAction = (state: string, action: any): string => {
+    switch (action.type ) {
         case 'add':
             return state + '1'
         case 'decreate':
@@ -16,13 +16,14 @@ export default function About() {
     const [count, setCount] = useState<countType>(0);
     useEffect(() => {
         console.log('im about')
+        console.log(myRef)
     }, []);
     const countSlow = useDeferredValue<countType>(count);
     const addCount = (): void => {
         if (typeof count !== 'number') return;
         startTransition(() => { setCount(count + 1) })
     }
-    const [text, dispatchText] = useReducer<() => string, string, () => string>(reducerAction, '', () => '');
+    const [text, dispatchText] = useReducer<(state: string, action: any) => string, string >(reducerAction, '', () => '');
     const [value, setValue] = useState<string>('');
     useEffect(() => {
         if (value == '') {
@@ -37,7 +38,7 @@ export default function About() {
         return text + '2'
     }, [text])
     const ref = useRef<any>(null);
-    const onchage = useCallback<()=>void,any[]>(():void => {
+    const onchage = useCallback<()=>void>(():void => {
         alert(1);
     },[text2])
     const myRef = useRef<any>(null);
@@ -71,14 +72,14 @@ interface Anmail extends Cat {
     age:number
 }
 // 来玩一个组件传DOM的方法，有意思
-const Son = forwardRef(memo(({children,text,ref}:childenType)=>{
-    useImperativeHandle(ref,()=>{
-        return {
-            focus():number{
-                return 1
-            }
-        }
-    })
+const Son = memo(forwardRef(({children,text,}:childenType,ref:any):React.ReactNode=>{
+    // useImperativeHandle(ref,()=>{
+    //     return {
+    //         focus():number{
+    //             return 1
+    //         }
+    //     }
+    // })
     const contextValues = useContext(contextValue);
     return <>
         <div ref={ref}>im children</div>
