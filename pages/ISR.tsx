@@ -1,5 +1,8 @@
 import Link from "next/link";
-export default function ArticalList({articals}:{articals:{}[]}){
+interface Artical {
+    articals:[],
+}
+export default function ArticalList(articals:Artical){
     return <>
         <span>i am articalList</span>
         {articals.map(x=>{
